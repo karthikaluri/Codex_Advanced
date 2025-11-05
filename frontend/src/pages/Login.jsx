@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -10,7 +11,7 @@ export default function Login(){
   const submit = async (e) => {
     e.preventDefault()
     try{
-      const res = await axios.post('http://localhost:4000/api/auth/login', { email, password })
+      const res = await axios.post('https://codex-advanced.onrender.com/api/auth/login', { email, password })
       localStorage.setItem('token', res.data.token)
       nav('/')
     }catch(err){
@@ -19,13 +20,20 @@ export default function Login(){
   }
 
   return (
-    <div className="container">
-      <h2>Login</h2>
-      <form onSubmit={submit}>
-        <input placeholder="email" value={email} onChange={e=>setEmail(e.target.value)} />
-        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
-        <button>Login</button>
-      </form>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="brand">codex</div>
+        <h2>Welcome back</h2>
+        <p className="muted">Sign in to continue to Codex</p>
+        <form onSubmit={submit} className="auth-form">
+          <label>Email</label>
+          <input type="email" placeholder="you@domain.com" value={email} onChange={e=>setEmail(e.target.value)} required />
+          <label>Password</label>
+          <input type="password" placeholder="••••••••" value={password} onChange={e=>setPassword(e.target.value)} required />
+          <button className="btn">Sign in</button>
+        </form>
+        <div className="auth-foot">Don't have an account? <a href="/register">Create one</a></div>
+      </div>
     </div>
   )
 }

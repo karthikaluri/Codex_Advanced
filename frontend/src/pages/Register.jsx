@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -11,7 +12,7 @@ export default function Register(){
   const submit = async (e) => {
     e.preventDefault()
     try{
-      const res = await axios.post('http://localhost:4000/api/auth/register', { name, email, password })
+      const res = await axios.post('https://codex-advanced.onrender.com/api/auth/register', { name, email, password })
       localStorage.setItem('token', res.data.token)
       nav('/')
     }catch(err){
@@ -20,14 +21,22 @@ export default function Register(){
   }
 
   return (
-    <div className="container">
-      <h2>Register</h2>
-      <form onSubmit={submit}>
-        <input placeholder="name" value={name} onChange={e=>setName(e.target.value)} />
-        <input placeholder="email" value={email} onChange={e=>setEmail(e.target.value)} />
-        <input placeholder="password" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
-        <button>Register</button>
-      </form>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="brand">codex</div>
+        <h2>Create account</h2>
+        <p className="muted">Join Codex and start solving problems</p>
+        <form onSubmit={submit} className="auth-form">
+          <label>Full name</label>
+          <input placeholder="Your name" value={name} onChange={e=>setName(e.target.value)} required />
+          <label>Email</label>
+          <input type="email" placeholder="you@domain.com" value={email} onChange={e=>setEmail(e.target.value)} required />
+          <label>Password</label>
+          <input placeholder="Choose a password" type="password" value={password} onChange={e=>setPassword(e.target.value)} required />
+          <button className="btn">Create account</button>
+        </form>
+        <div className="auth-foot">Already have an account? <a href="/login">Sign in</a></div>
+      </div>
     </div>
   )
 }
